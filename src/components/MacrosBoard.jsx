@@ -1,18 +1,39 @@
 import React from 'react';
 import MacroRow from './MacroRow';
 
-const MacrosBoard = () => {
+const MacrosBoard = ({ consumedCalories, goalCalories, consumedMacros, goalMacros }) => {
+  const remaining = goalCalories - consumedCalories;
+
+  const calculatePercent = (consumed, goal) => {
+    if (goal === 0) return '0%';
+    const percent = Math.min((consumed / goal) * 100, 100);
+    return `${Math.round(percent)}%`;
+  };
+
   return (
     <div className="card macros-board">
       <div className="macros-header">
         <div className="calories-circle">
-          <h2>0</h2>
+          <h2>{remaining > 0 ? remaining : 0}</h2>
           <p>kcal left</p>
         </div>
+        
         <div className="macros-list">
-          <MacroRow label="Proteins" percent="10%" value="13 / 130 g" />
-          <MacroRow label="Fats" percent="0%" value="0 / 58 g" />
-          <MacroRow label="Carbs" percent="0%" value="0 / 314 g" />
+          <MacroRow 
+            label="Protein" 
+            percent={calculatePercent(consumedMacros.protein, goalMacros.protein)} 
+            value={`${consumedMacros.protein} / ${goalMacros.protein} g`} 
+          />
+          <MacroRow 
+            label="Fat" 
+            percent={calculatePercent(consumedMacros.fat, goalMacros.fat)} 
+            value={`${consumedMacros.fat} / ${goalMacros.fat} g`} 
+          />
+          <MacroRow 
+            label="Carbs" 
+            percent={calculatePercent(consumedMacros.carbs, goalMacros.carbs)} 
+            value={`${consumedMacros.carbs} / ${goalMacros.carbs} g`} 
+          />
         </div>
       </div>
     </div>
