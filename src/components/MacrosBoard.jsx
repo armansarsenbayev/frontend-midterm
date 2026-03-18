@@ -13,12 +13,12 @@ const MacrosBoard = ({ consumedCalories, goalCalories, consumedMacros, goalMacro
   return (
     <div className="card macros-board">
       <div className="macros-header">
-        <div className="calories-circle">
-          <h2>{remaining > 0 ? remaining : 0}</h2>
-          <p>kcal left</p>
+        <div className="calories-circle" style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '2.5rem' }}>{remaining > 0 ? remaining : 0}</h2>
+          <p style={{ color: '#6c757d' }}>kcal left</p>
         </div>
         
-        <div className="macros-list">
+        <div className="macros-list" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <MacroRow 
             label="Protein" 
             percent={calculatePercent(consumedMacros.protein, goalMacros.protein)} 

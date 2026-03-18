@@ -31,33 +31,26 @@ const ProfileSetup = ({ onSaveProfile }) => {
   return (
     <div className="card profile-setup">
       <h3>⚙️ Profile Setup</h3>
-      <form onSubmit={handleCalculate} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        
+      <form onSubmit={handleCalculate}>
         <select value={gender} onChange={(e) => setGender(e.target.value)} className="weight-input">
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-
         <input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} className="weight-input" required />
         <input type="number" placeholder="Height (cm)" value={height} onChange={(e) => setHeight(e.target.value)} className="weight-input" required />
         <input type="number" placeholder="Weight (kg)" value={weight} onChange={(e) => setWeight(e.target.value)} className="weight-input" required />
-
         <select value={activity} onChange={(e) => setActivity(e.target.value)} className="weight-input">
           <option value="1.2">Sedentary (Little to no exercise)</option>
           <option value="1.375">Lightly active (1-3 days/week)</option>
           <option value="1.55">Moderately active (3-5 days/week)</option>
           <option value="1.725">Very active (6-7 days/week)</option>
         </select>
-
         <select value={goal} onChange={(e) => setGoal(e.target.value)} className="weight-input">
           <option value="-500">Lose Weight</option>
           <option value="0">Maintain Weight</option>
           <option value="500">Gain Muscle</option>
         </select>
-
-        <button type="submit" className="my-btn" style={{ marginTop: '10px' }}>
-          Calculate Macros
-        </button>
+        <button type="submit" className="my-btn">Calculate Macros</button>
       </form>
     </div>
   );

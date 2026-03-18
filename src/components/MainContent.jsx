@@ -46,25 +46,28 @@ const MainContent = () => {
 
   return (
     <main className="main-content">
-      <h2>Calorie & Water Tracker</h2>
-      <p>Set your parameters and track your progress every day.</p>
+      <div className="title-section">
+        <h2>Dashboard</h2>
+        <p>Track your daily progress</p>
+      </div>
       
-      <div className="dashboard-grid">
-        <div className="grid-left">
-          <ProfileSetup onSaveProfile={handleSaveProfile} />
-          <MealForm onAddMeal={handleAddMeal} />
-          <MealList meals={meals} onDeleteMeal={handleDeleteMeal} />
-        </div>
+      <div className="dashboard-container">
+        
+        <MacrosBoard 
+          consumedCalories={totalCalories} 
+          goalCalories={userGoals.calories}
+          consumedMacros={consumedMacros}
+          goalMacros={userGoals}
+        />
+        
+        <WaterWidget currentWater={water} goal={userGoals.water} onAddWater={handleAddWater} />
+        
+        <MealForm onAddMeal={handleAddMeal} />
+        
+        <MealList meals={meals} onDeleteMeal={handleDeleteMeal} />
+        
+        <ProfileSetup onSaveProfile={handleSaveProfile} />
 
-        <div className="grid-right">
-          <MacrosBoard 
-            consumedCalories={totalCalories} 
-            goalCalories={userGoals.calories}
-            consumedMacros={consumedMacros}
-            goalMacros={userGoals}
-          />
-          <WaterWidget currentWater={water} goal={userGoals.water} onAddWater={handleAddWater} />
-        </div>
       </div>
     </main>
   );
