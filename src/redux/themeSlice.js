@@ -20,12 +20,8 @@ const themeSlice = createSlice({
         document.body.classList.remove('dark-theme');
       }
     },
-    setThemeReducer: (state, action) => {
-      state.value = action.payload;
-      localStorage.setItem('theme', state.value);
-    }
   },
 });
 
-export const { toggleThemeReducer, setThemeReducer } = themeSlice.actions;
+export const { toggleThemeReducer} = themeSlice.actions;
 export default themeSlice.reducer;
