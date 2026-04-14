@@ -1,24 +1,28 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { ThemeContext } from '../context/ThemeContext';
+import React from 'react';
+import { Link } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleThemeReducer } from '../redux/themeSlice';
 
 const Header = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const theme = useSelector((state) => state.theme.value);
+  
+  const dispatch = useDispatch();
+
   return (
     <header className="app-header">
       <div className="header-content">
-        <h1>Calorie Tracker</h1>
+        <h1 className="logo">MacroFit</h1>
         <nav>
-          <ul>
+          <ul className="nav-links">
             <li><Link to="/">Dashboard</Link></li>
-            <li><Link to="/diary/add">Diary</Link></li>
+            <li><Link to="/diary">Diary</Link></li>
             <li><Link to="/settings">Settings</Link></li>
             <li><Link to="/about">About</Link></li>
           </ul>
         </nav>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <button 
-            onClick={toggleTheme} 
+            onClick={() => dispatch(toggleThemeReducer())} 
             className="theme-toggle-btn"
             aria-label="Toggle theme"
           >
