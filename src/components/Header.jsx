@@ -1,12 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleThemeReducer } from '../redux/themeSlice';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const theme = useSelector((state) => state.theme.value);
-  
   const dispatch = useDispatch();
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <header className="app-header">
@@ -14,20 +21,25 @@ const Header = () => {
         <h1 className="logo">MacroFit</h1>
         <nav>
           <ul className="nav-links">
-            <li><Link to="/">Dashboard</Link></li>
-            <li><Link to="/diary">Diary</Link></li>
-            <li><Link to="/settings">Settings</Link></li>
-            <li><Link to="/about">About</Link></li>
+            <li><NavLink to="/">Dashboard</NavLink></li>
+            <li><NavLink to="/diary">Diary</NavLink></li>
+            <li><NavLink to="/settings">Settings</NavLink></li>
+            <li><NavLink to="/about">About</NavLink></li>
           </ul>
         </nav>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <button 
-            onClick={() => dispatch(toggleThemeReducer())} 
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button
+            onClick={() => dispatch(toggleThemeReducer())}
             className="theme-toggle-btn"
             aria-label="Toggle theme"
           >
             {theme === 'light' ? 'Dark' : 'Light'}
           </button>
+          {isAuthenticated && (
+            <button onClick={handleLogout} className="theme-toggle-btn" style={{ borderColor: '#ff4d4f', color: '#ff4d4f' }}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </header>
