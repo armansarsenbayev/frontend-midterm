@@ -6,7 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Spinner from './components/Spinner';
 import './App.css';
 
-// Страницы загружаются только когда пользователь заходит на них
+
 const Dashboard      = lazy(() => import('./pages/Dashboard'));
 const Diary          = lazy(() => import('./pages/Diary'));
 const MealList       = lazy(() => import('./pages/MealList'));
@@ -22,7 +22,6 @@ const App = () => {
     <BrowserRouter>
       <Header />
       <main className="main-content">
-        {/* Suspense показывает Spinner пока страница загружается */}
         <Suspense fallback={<Spinner text="Loading page..." />}>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
