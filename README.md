@@ -1,45 +1,86 @@
-# MacroFit - Calorie & Water Tracker SPA
+# MacroFit Tracker
 
-## Description
-MacroFit is a fully interactive React Single Page Application (SPA) designed to help users track their daily macronutrients, calorie intake, and hydration levels. It features a dynamic BMR/TDEE calculator that personalizes daily goals based on user metrics, a controlled meal logging system, and real-time progress visualization.
+A React SPA for tracking daily macronutrients (protein, fat, carbs), calories, and water intake.
+Calorie goals are calculated using the **Mifflin-St Jeor** formula.
 
-## Key Features
-* **Smart Profile Setup:** Calculates personalized daily calorie and water goals using the Mifflin-St Jeor equation based on age, weight, height, and activity level.
-* **Interactive Dashboard:** Visualizes remaining calories and macronutrient breakdown (Protein, Fat, Carbs) using dynamic progress bars.
-* **Meal Diary:** Allows users to log meals with specific macronutrient values.
-* **Search & Filter:** Includes a real-time search input to easily find specific meals within the diary.
-* **Dynamic Calculations:** Utilizes JavaScript array methods (`map`, `filter`, `reduce`) to instantly recalculate totals when meals are added or deleted.
-* **Water Tracker:** Provides quick-add buttons and a custom input field to log daily water intake.
+## Screenshots
 
-## Technologies Used
-* React.js (Hooks: `useState`)
-* JavaScript (ES6+)
-* CSS3 (Responsive Mobile-First Design)
+> Add screenshots here after deployment
 
-## How to Run the Project
+## Tech Stack
 
-1. Clone the repository to your local machine:
-git clone https://github.com/armansarsenbayev/frontend-midterm.git
+| Technology | Version | Purpose |
+|---|---|---|
+| React | ^19 | UI library |
+| React Router DOM | ^7 | Client-side routing |
+| Redux Toolkit | ^2 | Global state management |
+| React Redux | ^9 | React-Redux binding |
+| MockAPI.io | — | REST API mock backend |
 
-2. Navigate into the project directory:
-cd frontend-midterm
+## Features
 
-3. Install the necessary dependencies:
+- Authentication simulation with protected routes
+- Meal diary with CRUD operations via REST API
+- Macro tracking with real-time progress bars
+- Water intake tracker with localStorage persistence
+- Dark / Light theme with Redux
+- Responsive design for mobile and desktop
+- Loading, error, and empty states for all async operations
+
+## Project Structure
+
+```
+src/
+├── components/   # Reusable UI components
+├── pages/        # Route-level page components
+├── hooks/        # Custom React hooks
+├── services/     # API service layer
+├── redux/        # Redux slices and store
+├── utils/        # Pure helper functions
+└── context/      # React Context (Auth)
+```
+
+## Getting Started
+
+### Prerequisites
+- Node.js >= 18
+- npm >= 9
+
+### Installation
+
+```bash
+git clone https://github.com/YOUR_USERNAME/macrofit-tracker.git
+cd macrofit-tracker
 npm install
+```
 
-4. Start the development server:
+### Running locally
+
+```bash
 npm start
+```
 
-The application will open automatically in your default browser at `http://localhost:3000`.
+Opens at [http://localhost:3000](http://localhost:3000)
 
-## Author
-Arman Sarsenbayev
+### Demo credentials
 
+```
+Email:    user@macrofit.com
+Password: 123456
+```
 
+### Build for production
 
+```bash
+npm run build
+```
 
+### Run tests
 
+```bash
+npm test
+```
 
+## Live Demo
 
-
-};
+> Add Vercel/Netlify URL here after deployment
