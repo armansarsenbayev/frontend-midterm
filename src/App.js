@@ -1,89 +1,49 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Dashboard from './components/Dashboard';
-import Diary from './components/Diary';
-import MealList from './components/MealList';
-import MealForm from './components/MealForm';
-import ProfileSetup from './components/ProfileSetup';
-import About from './components/About';
+import ProtectedRoute from './components/ProtectedRoute';
+import Spinner from './components/Spinner';
 import './App.css';
 
+// Страницы загружаются только когда пользователь заходит на них
+const Dashboard      = lazy(() => import('./pages/Dashboard'));
+const Diary          = lazy(() => import('./pages/Diary'));
+const MealList       = lazy(() => import('./pages/MealList'));
+const MealForm       = lazy(() => import('./components/MealForm'));
+const ProfileSetup   = lazy(() => import('./pages/ProfileSetup'));
+const About          = lazy(() => import('./pages/About'));
+const LoginPage      = lazy(() => import('./pages/LoginPage'));
+const MealDetailPage = lazy(() => import('./pages/MealDetailPage'));
+const NotFoundPage   = lazy(() => import('./pages/NotFoundPage'));
+
 const App = () => {
-  const [meals, setMeals] = useState([]);
-  const [water, setWater] = useState(0);
-  
-  const [userGoals, setUserGoals] = useState({
-    calories: 2000,
-    protein: 150,
-    fat: 65,
-    carbs: 200,
-    water: 2000
-  });
-
-  const handleSaveProfile = (calculatedProfile) => {
-    setUserGoals(calculatedProfile);
-  };
-
-  const handleAddMeal = (newMeal) => {
-    setMeals([...meals, newMeal]);
-  };
-
-  const handleDeleteMeal = (id) => {
-    setMeals(meals.filter(meal => meal.id !== id));
-  };
-
-  const handleAddWater = (amount) => {
-    setWater(water + amount);
-  };
-
-  const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
-  const totalProtein = meals.reduce((sum, meal) => sum + meal.protein, 0);
-  const totalFat = meals.reduce((sum, meal) => sum + meal.fat, 0);
-  const totalCarbs = meals.reduce((sum, meal) => sum + meal.carbs, 0);
-
-  const consumedMacros = {
-    protein: totalProtein,
-    fat: totalFat,
-    carbs: totalCarbs
-  };
-
   return (
     <BrowserRouter>
       <Header />
       <main className="main-content">
-        <Routes>
-          
-          <Route path="/" element={
-            <Dashboard 
-              consumedCalories={totalCalories} 
-              goalCalories={userGoals.calories}
-              consumedMacros={consumedMacros}
-              goalMacros={userGoals}
-              water={water}
-              onAddWater={handleAddWater}
-            />
-          } />
-          
-          <Route path="/diary" element={<Diary />}>
-            <Route path="list" element={<MealList meals={meals} onDeleteMeal={handleDeleteMeal} />} />
-            <Route path="add" element={<MealForm onAddMeal={handleAddMeal} />} />
-          </Route>
-
-          <Route path="/settings" element={
-            <div className="dashboard-container">
-              <div className="title-section">
-                <h2>Settings</h2>
-                <p>Update your body metrics</p>
-              </div>
-              <ProfileSetup onSaveProfile={handleSaveProfile} />
-            </div>
-          } />
-
-          <Route path="/about" element={<About />} />
-
-        </Routes>
+        {/* Suspense показывает Spinner пока страница загружается */}
+        <Suspense fallback={<Spinner text="Loading page..." />}>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/diary" element={<ProtectedRoute><Diary /></ProtectedRoute>}>
+              <Route path="list" element={<MealList />} />
+              <Route path="add"  element={<MealForm />} />
+            </Route>
+            <Route path="/diary/meal/:id" element={<ProtectedRoute><MealDetailPage /></ProtectedRoute>} />
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <div className="dashboard-container">
+                  <div className="title-section"><h2>Settings</h2><p>Update your body metrics</p></div>
+                  <ProfileSetup />
+                </div>
+              </ProtectedRoute>
+            } />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer />
     </BrowserRouter>
