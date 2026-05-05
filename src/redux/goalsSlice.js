@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// Читаем сохранённые goals из localStorage при старте
+
 const loadGoalsFromStorage = () => {
   try {
     const saved = localStorage.getItem('userGoals');
@@ -23,7 +23,7 @@ const goalsSlice = createSlice({
   initialState: loadGoalsFromStorage() || defaultGoals,
   reducers: {
     setGoals: (state, action) => {
-      // Сохраняем в localStorage при каждом изменении
+      
       const newGoals = { ...state, ...action.payload };
       localStorage.setItem('userGoals', JSON.stringify(newGoals));
       return newGoals;
